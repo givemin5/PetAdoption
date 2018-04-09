@@ -6,9 +6,21 @@
 
 <h2>Index</h2>
 
+<div class="container">
 
-@foreach (var pet in Model)
-{
-    <img src="@pet.album_file"/>
+    @for (int col = 0; col < Model.Count(); col += 4)
+    {
+        var rowPets = Model.Skip(col).Take(4);
+        <div class="row">
+            @foreach (var pet in rowPets)
+            {
+                <div class="col-md-4">
+                    <img src="@pet.album_file" style="width: 250px"/>
+                </div>
+            }
+        </div>
+    }
 
-}
+
+</div>
+
