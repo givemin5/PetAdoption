@@ -1,7 +1,14 @@
 ﻿
+@model IEnumerable<PetAdoption.Web.Models.PetJsonModel>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
+
+@foreach (var pet in Model)
+{
+    <img src="@pet.album_file"/>
+
+}
