@@ -14,22 +14,16 @@ namespace PetAdoption.Web.Daos
     {
         public List<PetJsonModel> GetAll()
         {
-            string url = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
+            const string url = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
 
-            HttpWebRequest req = WebRequest.Create(new Uri(url)) as HttpWebRequest;
-            req.Method = "GET";
+            var webClient = new WebClient {Encoding = Encoding.UTF8};
+            
+            var response = webClient.DownloadString(url);
 
-            WebResponse rs = req.GetResponse();
+            var petJsons = JsonConvert.DeserializeObject<List<PetJsonModel>>(response);
 
-            using (Stream stream = rs.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                String responseString = reader.ReadToEnd();
+            return petJsons;
 
-                var petJsons = JsonConvert.DeserializeObject<List<PetJsonModel>>(responseString);
-
-                return petJsons;
-            }
         }
     }
 }
